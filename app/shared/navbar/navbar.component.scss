@@ -1,0 +1,58 @@
+.navbar-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.app-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.desktop-nav {
+  display: flex;
+  gap: 0.25rem;
+
+  .active-link {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+  }
+}
+
+.hamburger {
+  // Hidden on desktop by default
+  display: none;
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .hamburger {
+    display: inline-flex;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+}
+
+.sidenav-container {
+  // Full-height container
+  height: calc(100vh - 64px);
+}
+
+.mobile-sidenav {
+  width: 260px;
+
+  .active-link {
+    background: rgba(63, 81, 181, 0.12);
+    font-weight: 600;
+  }
+}

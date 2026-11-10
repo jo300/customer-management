@@ -1,0 +1,61 @@
+<mat-card class="customer-list-card">
+
+    <mat-card-header>
+        <mat-card-title>Customer List</mat-card-title>
+        <mat-card-subtitle>List of all customers</mat-card-subtitle>
+        <button class="example-label" matButton="elevated" (click)="onAddClick()">Add Customer</button>
+    </mat-card-header>
+    <mat-card-content>
+        <!-- Wrapper enables horizontal scroll on small screens -->
+        <div class="table-wrapper">
+            <table mat-table [dataSource]="dataSource" class="customer-table">
+                <!-- First Name -->
+                <ng-container matColumnDef="firstName">
+                    <th mat-header-cell *matHeaderCellDef>First Name</th>
+                    <td mat-cell *matCellDef="let customer">{{ customer.firstName }}</td>
+                </ng-container>
+
+                <!-- Last Name -->
+                <ng-container matColumnDef="lastName">
+                    <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                    <td mat-cell *matCellDef="let customer">{{ customer.lastName }}</td>
+                </ng-container>
+
+                <!-- Email -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                    <td mat-cell *matCellDef="let customer">{{ customer.email }}</td>
+                </ng-container>
+
+                <!-- Company -->
+                <ng-container matColumnDef="company">
+                    <th mat-header-cell *matHeaderCellDef>Company</th>
+                    <td mat-cell *matCellDef="let customer">{{ customer.company }}</td>
+                </ng-container>
+
+                <!-- Actions (placeholder) -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td mat-cell *matCellDef="let customer">
+                        <button mat-icon-button aria-label="Edit customer" (click)="onEdit(customer)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button aria-label="Delete customer" (click)="deleteCustomer(customer)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let customer; columns: displayedColumns"></tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>
+@if (formShow) {
+<mat-card class="customer-form-card">
+    <app-customer-form [mode]="editingCustomer ? 'edit' : 'create'" [customer]="editingCustomer ?? undefined"
+        [existingCustomers]="dataSource" (formSubmit)="onFormSubmit($event)" (formCancel)="onFormCancel()">
+    </app-customer-form>
+</mat-card>
+}

@@ -1,0 +1,35 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  min-height: 60vh;
+  gap: 1rem;
+}
+.not-found__gif {
+  max-width: 100%;
+  width: 40rem;
+  height: auto;
+  border-radius: 12px;
+}
+.not-found__title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+.not-found__text {
+  margin: 0;
+  max-width: 480px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 480px) {
+  .not-found__gif {
+    width: 260px;
+  }
+  .not-found__title {
+    font-size: 1.4rem;
+  }
+}/*# sourceMappingURL=not-found.component.css.map */

@@ -1,0 +1,36 @@
+<!-- Desktop toolbar (always visible) -->
+<mat-toolbar color="primary" class="navbar-toolbar">
+    <!-- Hamburger — visible only on mobile -->
+    <button mat-icon-button class="hamburger" (click)="toggleMenu()" aria-label="Toggle navigation menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="app-title" routerLink="/">Customer Management</span>
+
+    <span class="spacer"></span>
+
+    <!-- Desktop nav links — hidden on mobile via CSS -->
+    <nav class="desktop-nav">
+        <a *ngFor="let link of navLinks" mat-button [routerLink]="link.path" routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: link.path === '/' }">
+            {{ link.lebel }}
+        </a>
+    </nav>
+</mat-toolbar>
+
+<!-- Sidenav — slides in on mobile when hamburger is clicked -->
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="over" [opened]="isMenuOpen()" (closedStart)="closeMenu()" class="mobile-sidenav">
+        <mat-nav-list>
+            <a *ngFor="let link of navLinks" mat-list-item [routerLink]="link.path" routerLinkActive="active-link"
+                [routerLinkActiveOptions]="{ exact: link.path === '/' }" (click)="closeMenu()">
+                {{ link.lebel }}
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <!-- Routed content goes here -->
+    <mat-sidenav-content>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>
