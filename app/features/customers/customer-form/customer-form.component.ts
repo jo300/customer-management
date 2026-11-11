@@ -19,14 +19,14 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MatCardModule } from "@angular/material/card";
 import {
   Customer,
   CustomerFormMode,
   CustomerPayload,
 } from "../../../core/models/customer.model";
 import { PhoneFormatDirective } from "../../../shared/directives/phone-format.directive";
-import { MatCardModule } from "@angular/material/card";
-
+import { duplicateEmailValidator } from "../../../core/validator/duplicate-email.validator";
 @Component({
   selector: "app-customer-form",
   standalone: true,
@@ -36,8 +36,8 @@ import { MatCardModule } from "@angular/material/card";
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    PhoneFormatDirective,
     MatCardModule,
+    PhoneFormatDirective,
   ],
   templateUrl: "./customer-form.component.html",
   styleUrl: "./customer-form.component.scss",
@@ -83,6 +83,16 @@ export class CustomerFormComponent implements OnInit {
         company: this.customer.company ?? "",
       });
     }
+
+    // 3. Wire up the duplicate email validator
+    const emailControl = this.form.get("email");
+    emailControl?.addValidators(
+      duplicateEmailValidator(
+        this.existingCustomers,
+        this.mode === "edit" ? this.customer?.id : undefined,
+      ),
+    );
+    emailControl?.updateValueAndValidity();
   }
 
   get firstName() {
