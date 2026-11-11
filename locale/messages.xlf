@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="detailsEmail" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-details/customer-details.component.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="detailsCompany" datatype="html">
+        <source>Company</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-details/customer-details.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="detailsBack" datatype="html">
+        <source>arrow_back</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-details/customer-details.component.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="detailsEdit" datatype="html">
+        <source>edit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-details/customer-details.component.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="formFirstName" datatype="html">
+        <source>First Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-form/customer-form.component.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="formFirstNameRequired" datatype="html">
+        <source> First name is required </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-form/customer-form.component.html</context>
+          <context context-type="linenumber">7,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="formLastName" datatype="html">
+        <source>Last Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-form/customer-form.component.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="formLastNameRequired" datatype="html">
+        <source> Last name is required </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-form/customer-form.component.html</context>
+          <context context-type="linenumber">16,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="formEmail" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-form/customer-form.component.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="formEmailRequired" datatype="html">
+        <source> Email is required </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-form/customer-form.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="formEmailInvalid" datatype="html">
+        <source> Please enter a valid email address </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-form/customer-form.component.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="formPhone" datatype="html">
+        <source>Phone (optional)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-form/customer-form.component.html</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="formCompany" datatype="html">
+        <source>Company (optional)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-form/customer-form.component.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="formCancel" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-form/customer-form.component.html</context>
+          <context context-type="linenumber">46,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="formSubmit" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{ mode === &apos;edit&apos; ? &apos;Save Changes &apos; : &apos;Create Customer&apos; }}"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-form/customer-form.component.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="customerListTitle" datatype="html">
+        <source>Customer List</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-list/customer-list.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="customerListSubtitle" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{ dataSource.data.length }}"/> <x id="INTERPOLATION_1" equiv-text="{{ dataSource.data.length === 1 ? &apos;customer&apos; : &apos;customers&apos; }}"/> found </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-list/customer-list.component.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="customerListAdd" datatype="html">
+        <source>Add Customer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-list/customer-list.component.html</context>
+          <context context-type="linenumber">13,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="customerListSearch" datatype="html">
+        <source>Search customers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-list/customer-list.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="colFirstName" datatype="html">
+        <source>First Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-list/customer-list.component.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="colLastName" datatype="html">
+        <source>Last Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-list/customer-list.component.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="colEmail" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-list/customer-list.component.html</context>
+          <context context-type="linenumber">54,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="colCompany" datatype="html">
+        <source>Company</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-list/customer-list.component.html</context>
+          <context context-type="linenumber">61,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="colActions" datatype="html">
+        <source>Actions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/customer-list/customer-list.component.html</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deleteTitle" datatype="html">
+        <source>Delete customer?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/delete-confirm-dialog/delete-confirm-dialog.component.ts</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deleteConfirm" datatype="html">
+        <source>Are you sure you want to delete</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/delete-confirm-dialog/delete-confirm-dialog.component.ts</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deleteCannotUndo" datatype="html">
+        <source>This action cannot be undone.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/delete-confirm-dialog/delete-confirm-dialog.component.ts</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deleteCancel" datatype="html">
+        <source> Cancel </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/delete-confirm-dialog/delete-confirm-dialog.component.ts</context>
+          <context context-type="linenumber">28,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="deleteConfirmBtn" datatype="html">
+        <source> Delete </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/customers/delete-confirm-dialog/delete-confirm-dialog.component.ts</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginTitle" datatype="html">
+        <source>Login</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/login/login.component.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginSubtitle" datatype="html">
+        <source>Customer Management</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/login/login.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginEmail" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/login/login.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginEmailRequired" datatype="html">
+        <source>Email is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/login/login.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginEmailInvalid" datatype="html">
+        <source> Please enter a valid email </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/login/login.component.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginPassword" datatype="html">
+        <source>Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/login/login.component.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginPasswordRequired" datatype="html">
+        <source>Password is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/login/login.component.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginSignIn" datatype="html">
+        <source>Sign In</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/login/login.component.html</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginDemoCredentials" datatype="html">
+        <source> Demo credentials: <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>admintest.com<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> / <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>password123<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/login/login.component.html</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,29 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="dynamic-form">
+    <ng-container *ngFor="let field of fields">
+        <mat-form-field appearance="outline">
+            <mat-label>{{ field.label }}</mat-label>
+
+            <input *ngIf="field.type !== 'textarea' && field.type !== 'select'" matInput [type]="field.type"
+                [formControlName]="field.key" [placeholder]="field.placeholder ?? ''" />
+
+            <textarea *ngIf="field.type === 'textarea'" matInput [formControlName]="field.key"
+                [placeholder]="field.placeholder ?? ''"></textarea>
+
+            <mat-select *ngIf="field.type === 'select'" [formControlName]="field.key">
+                <mat-option *ngFor="let opt of field.options ?? []" [value]="opt.value">
+                    {{ opt.label }}
+                </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="control(field.key).hasError('required')">{{ field.label }} is required</mat-error>
+            <mat-error *ngIf="control(field.key).hasError('email')">Invalid email</mat-error>
+            <mat-error *ngIf="control(field.key).hasError('min')">Value too small</mat-error>
+            <mat-error *ngIf="control(field.key).hasError('max')">Value too large</mat-error>
+        </mat-form-field>
+    </ng-container>
+
+    <div class="actions">
+        <button mat-button type="button" (click)="cancelForm.emit()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{ submitLabel }}</button>
+    </div>
+</form>

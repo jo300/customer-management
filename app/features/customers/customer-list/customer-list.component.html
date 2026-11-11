@@ -1,61 +1,94 @@
-<mat-card class="customer-list-card">
+<mat-card class="customer-list-card" appearance="outlined">
 
-    <mat-card-header>
-        <mat-card-title>Customer List</mat-card-title>
-        <mat-card-subtitle>List of all customers</mat-card-subtitle>
-        <button class="example-label" matButton="elevated" (click)="onAddClick()">Add Customer</button>
+    <!-- Header with title + add button on the right -->
+    <mat-card-header class="card-header">
+        <div class="header-text">
+            <mat-card-title i18n="@@customerListTitle">Customer List</mat-card-title>
+            <mat-card-subtitle i18n="@@customerListSubtitle">
+                {{ dataSource.data.length }} {{ dataSource.data.length === 1 ? 'customer' : 'customers' }} found
+            </mat-card-subtitle>
+        </div>
+        <button mat-flat-button color="primary" class="add-btn" (click)="onAddClick()">
+            <mat-icon>add</mat-icon>
+            <span i18n="@@customerListAdd">Add Customer</span>
+        </button>
     </mat-card-header>
+
+    <mat-divider></mat-divider>
+
     <mat-card-content>
-        <!-- Wrapper enables horizontal scroll on small screens -->
+        <!-- Search bar, aligned right above table -->
+        <div class="toolbar">
+            <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+                <mat-label i18n="@@customerListSearch">Search customers</mat-label>
+                <mat-icon matPrefix>search</mat-icon>
+                <input matInput [formControl]="searchControl" placeholder="Name, email, or company" />
+                @if (searchControl.value) {
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="searchControl.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                }
+            </mat-form-field>
+        </div>
+
+        <!-- Table -->
         <div class="table-wrapper">
             <table mat-table [dataSource]="dataSource" class="customer-table">
-                <!-- First Name -->
+
+                <!-- First Name (link) -->
                 <ng-container matColumnDef="firstName">
-                    <th mat-header-cell *matHeaderCellDef>First Name</th>
-                    <td mat-cell *matCellDef="let customer">{{ customer.firstName }}</td>
+                    <th mat-header-cell *matHeaderCellDef i18n="@@colFirstName">First Name</th>
+                    <td mat-cell *matCellDef="let customer">
+                        <a class="customer-link" [routerLink]="['/customers', customer.id]">
+                            {{ customer.firstName }}
+                        </a>
+                    </td>
                 </ng-container>
 
-                <!-- Last Name -->
                 <ng-container matColumnDef="lastName">
-                    <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                    <th mat-header-cell *matHeaderCellDef i18n="@@colLastName">Last Name</th>
                     <td mat-cell *matCellDef="let customer">{{ customer.lastName }}</td>
                 </ng-container>
 
-                <!-- Email -->
                 <ng-container matColumnDef="email">
-                    <th mat-header-cell *matHeaderCellDef>Email</th>
-                    <td mat-cell *matCellDef="let customer">{{ customer.email }}</td>
+                    <th mat-header-cell *matHeaderCellDef i18n="@@colEmail">Email</th>
+                    <td mat-cell *matCellDef="let customer">
+                        <a class="email-link" href="mailto:{{ customer.email }}">{{ customer.email }}</a>
+                    </td>
                 </ng-container>
 
-                <!-- Company -->
                 <ng-container matColumnDef="company">
-                    <th mat-header-cell *matHeaderCellDef>Company</th>
+                    <th mat-header-cell *matHeaderCellDef i18n="@@colCompany">Company</th>
                     <td mat-cell *matCellDef="let customer">{{ customer.company }}</td>
                 </ng-container>
 
-                <!-- Actions (placeholder) -->
                 <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef>Actions</th>
-                    <td mat-cell *matCellDef="let customer">
-                        <button mat-icon-button aria-label="Edit customer" (click)="onEdit(customer)">
+                    <th mat-header-cell *matHeaderCellDef class="actions-header" i18n="@@colActions">Actions</th>
+                    <td mat-cell *matCellDef="let customer" class="actions-cell">
+                        <button mat-icon-button color="primary" aria-label="Edit customer" matTooltip="Edit"
+                            (click)="onEdit(customer)">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        <button mat-icon-button aria-label="Delete customer" (click)="deleteCustomer(customer)">
+                        <button mat-icon-button color="warn" aria-label="Delete customer" matTooltip="Delete"
+                            (click)="deleteCustomer(customer)">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </td>
                 </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let customer; columns: displayedColumns"></tr>
             </table>
+
+            <!-- Empty state -->
+            @if (dataSource.data.length === 0) {
+            <div class="empty-state">
+                <mat-icon>search_off</mat-icon>
+                <p>No customers match your search.</p>
+            </div>
+            }
+            <mat-paginator [pageSizeOptions]="[5, 10, 25]" [pageSize]="5" showFirstLastButtons>
+            </mat-paginator>
         </div>
     </mat-card-content>
 </mat-card>
-@if (formShow) {
-<mat-card class="customer-form-card">
-    <app-customer-form [mode]="editingCustomer ? 'edit' : 'create'" [customer]="editingCustomer ?? undefined"
-        [existingCustomers]="dataSource" (formSubmit)="onFormSubmit($event)" (formCancel)="onFormCancel()">
-    </app-customer-form>
-</mat-card>
-}

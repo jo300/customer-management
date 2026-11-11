@@ -74,4 +74,206 @@ section {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.empty-state {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 1.5rem 0;
+}
+
+:host {
+  display: block;
+  padding: 24px;
+  background: #f5f7fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ---------- Card shell ---------- */
+.customer-list-card {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ---------- Header ---------- */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  gap: 16px;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header mat-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.card-header mat-card-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.add-btn {
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 10px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---------- Toolbar / Search ---------- */
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px 8px;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 360px;
+}
+
+/* ---------- Table wrapper ---------- */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  margin: 8px 24px 24px;
+}
+
+.customer-table {
+  width: 100%;
+  min-width: 640px;
+  background: #fff;
+}
+
+/* Sticky header background */
+.customer-table th.mat-mdc-header-cell {
+  background: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.customer-table td.mat-mdc-cell {
+  font-size: 0.925rem;
+  color: #1f2937;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+/* Row hover */
+.customer-table tr.mat-mdc-row:hover {
+  background: #f0f4ff;
+  transition: background 0.15s ease;
+}
+
+/* Links */
+.customer-link {
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.customer-link:hover {
+  text-decoration: underline;
+}
+
+.email-link {
+  color: #4b5563;
+  text-decoration: none;
+}
+
+.email-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Actions column */
+.actions-header,
+.actions-cell {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---------- Empty state ---------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  color: #9ca3af;
+  gap: 8px;
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* ---------- Form card ---------- */
+.customer-form-card {
+  max-width: 1200px;
+  margin: 24px auto 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  :host {
+    padding: 12px;
+  }
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .add-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .toolbar {
+    justify-content: stretch;
+    padding: 12px 16px 4px;
+  }
+  .search-field {
+    max-width: 100%;
+  }
+  .table-wrapper {
+    margin: 8px 16px 16px;
+  }
+}
+mat-paginator {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin-top: 0.5rem;
 }/*# sourceMappingURL=customer-list.component.css.map */

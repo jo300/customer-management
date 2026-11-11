@@ -1,36 +1,63 @@
-<!-- Desktop toolbar (always visible) -->
-<mat-toolbar color="primary" class="navbar-toolbar">
-    <!-- Hamburger — visible only on mobile -->
-    <button mat-icon-button class="hamburger" (click)="toggleMenu()" aria-label="Toggle navigation menu">
-        <mat-icon>menu</mat-icon>
-    </button>
-
-    <span class="app-title" routerLink="/">Customer Management</span>
-
-    <span class="spacer"></span>
-
-    <!-- Desktop nav links — hidden on mobile via CSS -->
-    <nav class="desktop-nav">
-        <a *ngFor="let link of navLinks" mat-button [routerLink]="link.path" routerLinkActive="active-link"
-            [routerLinkActiveOptions]="{ exact: link.path === '/' }">
-            {{ link.lebel }}
-        </a>
-    </nav>
-</mat-toolbar>
-
-<!-- Sidenav — slides in on mobile when hamburger is clicked -->
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="app-shell">
+    <!-- Mobile sidenav -->
     <mat-sidenav mode="over" [opened]="isMenuOpen()" (closedStart)="closeMenu()" class="mobile-sidenav">
         <mat-nav-list>
             <a *ngFor="let link of navLinks" mat-list-item [routerLink]="link.path" routerLinkActive="active-link"
                 [routerLinkActiveOptions]="{ exact: link.path === '/' }" (click)="closeMenu()">
-                {{ link.lebel }}
+                {{ link.label }}
             </a>
+
+            <ng-container *ngIf="auth.isAuthenticated(); else loggedOutMobile">
+                <button mat-list-item (click)="logout()">
+                    <mat-icon>logout</mat-icon>
+                    <span i18n="@@navLogout">Logout</span>
+                </button>
+            </ng-container>
+            <ng-template #loggedOutMobile>
+                <a mat-list-item routerLink="/login" (click)="closeMenu()">
+                    <mat-icon>login</mat-icon>
+                    <span i18n="@@navLogin">Login</span>
+                </a>
+            </ng-template>
         </mat-nav-list>
     </mat-sidenav>
 
-    <!-- Routed content goes here -->
+    <!-- Main content -->
     <mat-sidenav-content>
-        <ng-content></ng-content>
+        <mat-toolbar color="primary" class="navbar-toolbar">
+            <button mat-icon-button class="hamburger" (click)="toggleMenu()" aria-label="Toggle navigation menu">
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <span class="app-title" routerLink="/" i18n="@@navAppTitle">Customer Management</span>
+
+            <span class="spacer"></span>
+
+            <nav class="desktop-nav">
+                <a *ngFor="let link of navLinks" mat-button [routerLink]="link.path" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: link.path === '/' }">
+                    {{ link.label }}
+                </a>
+
+                <ng-container *ngIf="auth.isAuthenticated(); else loggedOut">
+                    <span class="user-email">{{ auth.currentEmail() }}</span>
+                    <button mat-button color="warn" (click)="logout()">
+                        <mat-icon>logout</mat-icon>
+                        <span i18n="@@navLogout">Logout</span>
+                    </button>
+                </ng-container>
+                <ng-template #loggedOut>
+                    <a mat-button routerLink="/login">
+                        <mat-icon>login</mat-icon>
+                        <span i18n="@@navLogin">Login</span>
+                    </a>
+                </ng-template>
+            </nav>
+        </mat-toolbar>
+
+        <!-- ⚠️ CRITICAL: the routed content goes here -->
+        <main class="content-area">
+            <router-outlet></router-outlet>
+        </main>
     </mat-sidenav-content>
 </mat-sidenav-container>

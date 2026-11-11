@@ -1,34 +1,43 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { Inject } from '@angular/core';
+import { Inject } from "@angular/core";
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
   MatDialogRef,
-} from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
+} from "@angular/material/dialog";
+import { MatButtonModule } from "@angular/material/button";
 export interface DeleteConfirmData {
   customerName: string;
 }
 
 @Component({
-  selector: 'app-delete-confirm-dialog',
+  selector: "app-delete-confirm-dialog",
   standalone: true,
   imports: [MatDialogModule, MatButtonModule],
   template: `
-    <h2 mat-dialog-title>Delete customer?</h2>
+    <h2 mat-dialog-title i18n="@@deleteTitle">Delete customer?</h2>
     <mat-dialog-content>
-      Are you sure you want to delete <strong>{{ data.customerName }}</strong
-      >? This action cannot be undone.
+      <span i18n="@@deleteConfirm">Are you sure you want to delete</span>
+      <strong>{{ data.customerName }}</strong
+      >?
+      <span i18n="@@deleteCannotUndo">This action cannot be undone.</span>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-raised-button color="warn" (click)="onConfirm()">
+      <button mat-button (click)="onCancel()" i18n="@@deleteCancel">
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="onConfirm()"
+        i18n="@@deleteConfirmBtn"
+      >
         Delete
       </button>
     </mat-dialog-actions>
   `,
-  styleUrl: './delete-confirm-dialog.component.scss',
+  styleUrl: "./delete-confirm-dialog.component.scss",
 })
 export class DeleteConfirmDialogComponent {
   constructor(

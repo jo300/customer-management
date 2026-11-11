@@ -49,4 +49,10 @@
 .mobile-sidenav .active-link {
   background: rgba(63, 81, 181, 0.12);
   font-weight: 600;
+}
+
+.user-email {
+  margin: 0 0.75rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
 }/*# sourceMappingURL=navbar.component.css.map */

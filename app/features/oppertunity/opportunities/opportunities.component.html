@@ -1,0 +1,11 @@
+<mat-card>
+    <mat-card-header><mat-card-title>New Opportunity (dynamic form demo)</mat-card-title></mat-card-header>
+    <mat-card-content>
+        <app-dynamic-form [fields]="oppFields" submitLabel="Create" (submitForm)="onDynamicSubmit($event)"
+            (cancelForm)="onDynamicCancel()">
+        </app-dynamic-form>
+        @if (lastSubmitted) {
+        <pre class="demo-output">{{ lastSubmitted | json }}</pre>
+        }
+    </mat-card-content>
+</mat-card>

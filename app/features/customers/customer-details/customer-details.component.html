@@ -1,1 +1,38 @@
-<p>customer-details works!</p>
+@if (isLoading) {
+<div class="center"><mat-spinner diameter="40"></mat-spinner></div>
+} @else if (customer) {
+<mat-card class="details-card">
+    <mat-card-header>
+        <mat-card-title>{{ customer.firstName }} {{ customer.lastName }}</mat-card-title>
+        <mat-card-subtitle>{{ customer.company || 'No company' }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        @if (isEditing) {
+        <app-customer-form mode="edit" [customer]="customer" (formSubmit)="onSave($event)"
+            (formCancel)="onCancelEdit()">
+        </app-customer-form>
+        } @else {
+        <dl class="details-list">
+            <dt i18n="@@detailsEmail">Email</dt>
+            <dd>{{ customer.email }}</dd>
+            <dt>Phone</dt>
+            <dd>{{ customer.phone |phoneFormat }}</dd>
+            <dt i18n="@@detailsCompany">Company</dt>
+            <dd>{{ customer.company || '—' }}</dd>
+        </dl>
+        }
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+        <button mat-button (click)="onBack()">
+            <mat-icon i18n="@@detailsBack">arrow_back</mat-icon> Back
+        </button>
+        @if (!isEditing) {
+        <button mat-raised-button color="primary" (click)="onEdit()">
+            <mat-icon i18n="@@detailsEdit">edit</mat-icon> Edit
+        </button>
+        }
+    </mat-card-actions>
+</mat-card>
+}

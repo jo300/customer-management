@@ -1,109 +1,222 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { CustomerFormComponent } from '../customer-form/customer-form.component';
-import { Customer, CustomerPayload } from '../../../core/models/customer.model';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import {
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  OnInit,
+  ViewChild,
+  inject,
+} from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { CommonModule } from "@angular/common";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { RouterLink } from "@angular/router";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { debounceTime, distinctUntilChanged } from "rxjs";
+import { CustomerFormComponent } from "../customer-form/customer-form.component";
 import {
   DeleteConfirmDialogComponent,
   DeleteConfirmData,
-} from '../delete-confirm-dialog/delete-confirm-dialog.component';
+} from "../delete-confirm-dialog/delete-confirm-dialog.component";
+import { Customer, CustomerPayload } from "../../../core/models/customer.model";
+import { CustomerService } from "../../../../services/customer.service";
+import { NotificationService } from "../../../../services/notification.service";
+import { MatDivider } from "@angular/material/divider";
 
 @Component({
-  selector: 'app-customer-list',
+  selector: "app-customer-list",
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
     MatTableModule,
+    MatPaginatorModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    CustomerFormComponent,
+    MatInputModule,
+    MatFormFieldModule,
     MatDialogModule,
+    MatDivider,
+    MatProgressSpinnerModule,
+    CustomerFormComponent,
   ],
-  templateUrl: './customer-list.component.html',
-  styleUrl: './customer-list.component.scss',
+  templateUrl: "./customer-list.component.html",
+  styleUrl: "./customer-list.component.scss",
 })
-export class CustomerListComponent {
-  constructor(private dialog: MatDialog) {}
-  formShow: boolean = false;
+export class CustomerListComponent implements OnInit, AfterViewInit {
+  private readonly dialog = inject(MatDialog);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly dataService = inject(CustomerService);
+  private readonly notify = inject(NotificationService);
+
+  readonly displayedColumns = [
+    "firstName",
+    "lastName",
+    "email",
+    "company",
+    "actions",
+  ];
+
+  readonly searchControl = new FormControl<string>("", { nonNullable: true });
+
+  /** MatTableDataSource wraps the array — enables paginator + filter */
+  readonly dataSource = new MatTableDataSource<Customer>([]);
+
+  /** Paginator must attach after the view renders */
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  allCustomers: Customer[] = [];
   editingCustomer: Customer | null = null;
+  isLoading = false;
 
-  readonly displayedColumns: string[] = [
-    'firstName',
-    'lastName',
-    'email',
-    'company',
-    'actions',
-  ];
-  dataSource: Customer[] = [
-    {
-      id: 1,
-      firstName: 'John',
-      lastName: ' Doe',
-      email: 'John@gmail.com',
-      phone: '123-456-7890',
-      company: 'ABC Inc.',
-    },
-    {
-      id: 2,
-      firstName: 'Jane ',
-      lastName: ' Smith',
-
-      email: 'Jane@gmail.com',
-      phone: '987-654-3210',
-      company: 'XYZ Ltd.',
-    },
-    {
-      id: 3,
-      firstName: 'Bob ',
-      lastName: ' Johnson',
-
-      email: 'bob@gmail.com',
-      phone: '555-555-5555',
-      company: 'Acme Corp.',
-    },
-    {
-      id: 4,
-      firstName: 'Alice ',
-      lastName: 'Brown',
-      email: 'alice@gmail.com',
-      phone: '111-222-3333',
-      company: 'Tech Solutions',
-    },
-
-    {
-      id: 5,
-      firstName: 'Charlie ',
-      lastName: ' Davis',
-      email: 'charli@gmail.com',
-      phone: '444-555-6666',
-      company: 'Innovatech',
-    },
-  ];
-  onEdit(customer: Customer): void {
-    this.editingCustomer = { ...customer }; // copy so Cancel doesn't mutate
-    this.formShow = true;
+  constructor() {
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => this.applyFilter());
   }
-  // --- Single handler for create AND edit ---
+
+  ngOnInit(): void {
+    this.loadCustomers();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  private loadCustomers(): void {
+    this.isLoading = true;
+    this.dataService
+      .getCustomers()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (customers) => {
+          this.allCustomers = customers;
+          this.applyFilter();
+          this.isLoading = false;
+        },
+        error: () => {
+          this.isLoading = false;
+          this.notify.error("Failed to load customers");
+        },
+      });
+  }
+
+  /** Sets the filtered rows on the MatTableDataSource */
+  private applyFilter(): void {
+    const q = this.searchControl.value.trim().toLowerCase();
+    const rows = !q
+      ? this.allCustomers
+      : this.allCustomers.filter(
+          (c) =>
+            c.firstName.toLowerCase().includes(q) ||
+            c.lastName.toLowerCase().includes(q) ||
+            c.email.toLowerCase().includes(q) ||
+            (c.company ?? "").toLowerCase().includes(q),
+        );
+    this.dataSource.data = rows;
+    if (this.dataSource.paginator) this.dataSource.paginator.firstPage();
+  }
+
+  // --- Create / Update (unchanged logic, re-fetch after) ---
   onFormSubmit(payload: CustomerPayload): void {
-    if (this.editingCustomer) {
-      // UPDATE
-      const id = this.editingCustomer.id;
-      this.dataSource = this.dataSource.map((c) =>
-        c.id === id ? { id, ...payload } : c,
-      );
-    } else {
-      // CREATE
-      const nextId = this.dataSource.length
-        ? Math.max(...this.dataSource.map((c) => c.id)) + 1
-        : 1;
-      this.dataSource = [...this.dataSource, { id: nextId, ...payload }];
-    }
-    this.closeForm();
+    const op = this.editingCustomer
+      ? this.dataService.updateCustomer(this.editingCustomer.id, payload)
+      : this.dataService.createCustomer(payload);
+
+    op.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: () => {
+        this.notify.success("Customer saved");
+        this.closeForm();
+        this.loadCustomers();
+      },
+      error: () => this.notify.error("Save failed"),
+    });
+  }
+
+  // --- Delete ---
+  deleteCustomer(customer: Customer): void {
+    const data: DeleteConfirmData = {
+      customerName: `${customer.firstName} ${customer.lastName}`,
+    };
+    this.dialog
+      .open(DeleteConfirmDialogComponent, { data, width: "400px" })
+      .afterClosed()
+      .subscribe((confirmed: boolean) => {
+        if (!confirmed) return;
+        this.dataService
+          .deleteCustomer(customer.id)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: () => {
+              this.notify.success("Customer deleted");
+              this.loadCustomers();
+            },
+            error: () => this.notify.error("Delete failed"),
+          });
+      });
+  }
+
+  // --- UI helpers ---
+  onAddClick(): void {
+    const dialogRef = this.dialog.open(CustomerFormComponent, {
+      width: "500px",
+      disableClose: true,
+      data: {
+        mode: "create",
+        existingCustomers: this.allCustomers,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((payload) => {
+      if (payload) {
+        this.dataService.createCustomer(payload).subscribe({
+          next: () => {
+            this.notify.success("Customer created");
+            this.loadCustomers();
+          },
+          error: () => this.notify.error("Create failed"),
+        });
+      }
+    });
+  }
+
+  onEdit(customer: Customer): void {
+    const dialogRef = this.dialog.open(CustomerFormComponent, {
+      width: "500px",
+      disableClose: true,
+      data: {
+        mode: "edit",
+        customer: { ...customer },
+        existingCustomers: this.allCustomers,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((payload) => {
+      if (payload) {
+        this.dataService.updateCustomer(customer.id, payload).subscribe({
+          next: () => {
+            this.notify.success("Customer updated");
+            this.loadCustomers();
+          },
+          error: () => this.notify.error("Update failed"),
+        });
+      }
+    });
   }
 
   onFormCancel(): void {
@@ -111,39 +224,6 @@ export class CustomerListComponent {
   }
 
   private closeForm(): void {
-    this.formShow = false;
     this.editingCustomer = null;
   }
-
-  deleteCustomer(customer: Customer) {
-    const data: DeleteConfirmData = {
-      customerName: `${customer.firstName} ${customer.lastName}`,
-    };
-
-    this.dialog
-      .open(DeleteConfirmDialogComponent, {
-        data,
-        width: '400px',
-        disableClose: false,
-      })
-      .afterClosed()
-      .subscribe((confirmed: boolean) => {
-        if (confirmed) {
-          const index = this.dataSource.findIndex((c) => c.id === customer.id);
-          if (index !== -1) {
-            this.dataSource = this.dataSource.filter(
-              (c) => c.id !== customer.id,
-            );
-          }
-        }
-      });
-  }
-
-  onAddClick(): void {
-    this.editingCustomer = null; // ensure create mode
-    this.formShow = true;
-  }
-}
-function inject(MatDialog: any) {
-  throw new Error('Function not implemented.');
 }

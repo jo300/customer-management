@@ -1,22 +1,29 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
-import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from "@angular/core";
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
+import { MatListModule } from "@angular/material/list";
+import { AuthService } from "../../../services/auth.service";
+import { $localize } from "@angular/localize/init";
+
 interface NavLink {
-  lebel: string;
+  label: string;
   path: string;
 }
 
 @Component({
-  selector: 'app-navbar',
+  selector: "app-navbar",
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
     RouterLink,
     RouterLinkActive,
     MatToolbarModule,
@@ -24,18 +31,32 @@ interface NavLink {
     MatIconModule,
     MatButtonModule,
     MatListModule,
+    RouterOutlet,
   ],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss',
+  templateUrl: "./navbar.component.html",
+  styleUrl: "./navbar.component.scss",
 })
 export class NavbarComponent {
+  readonly auth = inject(AuthService);
   readonly isMenuOpen = signal(false);
+
   readonly navLinks: NavLink[] = [
-    { lebel: 'Home', path: '' },
-    { lebel: 'Customers', path: '/customers' },
-    { lebel: 'Opportunities', path: '/opportunities' },
-    { lebel: 'Reports', path: '/reports' },
+    { label: $localize`:@@navHome:Home`, path: "/" },
+    { label: $localize`:@@navCustomers:Customers`, path: "/customers" },
+    {
+      label: $localize`:@@navOpportunities:Opportunities`,
+      path: "/opportunities",
+    },
+    { label: $localize`:@@navReports:Reports`, path: "/reports" },
   ];
+
+  constructor(private readonly router: Router) {}
+
+  logout(): void {
+    this.auth.logout();
+    this.router.navigate(["/login"]);
+  }
+
   toggleMenu(): void {
     this.isMenuOpen.update((open) => !open);
   }

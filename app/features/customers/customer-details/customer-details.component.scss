@@ -1,0 +1,21 @@
+.center {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 0;
+}
+.details-card {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.details-list {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0.5rem 1rem;
+  dt {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  dd {
+    margin: 0;
+  }
+}
