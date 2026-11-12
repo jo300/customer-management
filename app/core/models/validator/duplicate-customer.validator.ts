@@ -1,9 +1,7 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Customer } from '../../models/customer.model';
+import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { Customer } from "../../models/customer.model";
 
 /**
- * Factory that returns a validator checking whether a customer
- * with the same email already exists in the provided list.
  *
  * @param existingCustomers - the current customers to check against
  * @param currentCustomerId - when editing, exclude this customer's own id
@@ -16,7 +14,7 @@ export function duplicateEmailValidator(
   return (control: AbstractControl): ValidationErrors | null => {
     const value = (control.value as string | null)?.trim().toLowerCase();
     if (!value) {
-      return null; // let required/email validators handle empty values
+      return null;
     }
 
     const duplicate = existingCustomers.some(

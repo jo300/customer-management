@@ -7,9 +7,5 @@ export interface Customer {
   company?: string;
 }
 
-export type CustomerPayload = Omit<Customer, 'id'>;
-
-/**
- * Form mode — determines whether the form creates or edits a customer.
- */
-export type CustomerFormMode = 'create' | 'edit';
+export type CustomerPayload = Omit<Customer, "id">;
+export type CustomerFormMode = "create" | "edit";

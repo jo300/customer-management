@@ -131,21 +131,17 @@ export class CustomerFormComponent implements OnInit {
       company: (raw.company as string)?.trim() || undefined,
     };
 
-    // If inside a Dialog, close it and pass the payload back
     if (this.dialogRef) {
       this.dialogRef.close(payload);
     } else {
-      // Fallback if used normally
       this.formSubmit.emit(payload);
     }
   }
 
   onCancel(): void {
-    // If inside a Dialog, close it without passing data
     if (this.dialogRef) {
       this.dialogRef.close();
     } else {
-      // Fallback if used normally
       this.formCancel.emit();
     }
   }
